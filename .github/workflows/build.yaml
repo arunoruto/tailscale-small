@@ -33,7 +33,7 @@ jobs:
           OS: linux
           ARCH: mipsle
           MIPS: softfloat
-        run: GOOS=$OS GOARCH=$ARCH GOMIPS=$MIPS go build -o tailscale.combined -tags ts_include_cli -trimpath -ldflags="-s -w" ./cmd/tailscaled
+        run: GOOS=$OS GOARCH=$ARCH GOMIPS=$MIPS go build -o tailscale.combined -tags ts_include_cli -trimpath -ldflags="-s -w" ./tailscale/cmd/tailscaled
       - name: Compression tailscale
         uses: crazy-max/ghaction-upx@v2
         with:
