@@ -1,0 +1,41 @@
+name: Build
+run-name: ${{ github.actor }} is building new tailscale packages
+on:
+  workflow_dispatch:
+env:
+  REPO_URL: https://github.com/tailscale/tailscale
+  REPO_TAG: v1.40.1
+  REPO_DEPTH: 1
+
+jobs:
+  build-mips-le:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      # - name: Initialization environment
+      #   run: |
+      #     sudo mkdir -p /workdir
+      #     sudo chown $USER:$GROUPS /workdir
+      - name: Clone tailscale repo
+        working-directory: /workdir
+        run: |
+          git clone --depth $REPO_DEPTH --branch $REPO_BRANCH $REPO_URL tailscale
+        #  ln -sf /workdir/tailscale $GITHUB_WORKSPACE/tailscale
+      - name: Install dependencies
+        run: sudo apt update && sudo apt install -y binutils-mipsel-linux-gnu
+      - uses: actions/setup-go@v4
+        with:
+          go-version: "stable"
+      - name: Build tailscale
+        env:
+          OS: linux
+          ARCH: mipsle
+          MIPS: softfloat
+        run: GOOS=$OS GOARCH=$ARCH GOMIPS=$MIPS go build -o tailscale.combined -tags ts_include_cli -trimpath -ldflags="-s -w" ./cmd/tailscaled
+      - name: Compression tailscale
+        uses: crazy-max/ghaction-upx@v2
+        with:
+          version: latest
+          args: --lzma
+          files: |
+            tailscale.combined
