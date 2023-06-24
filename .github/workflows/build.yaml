@@ -19,7 +19,7 @@ jobs:
       - name: Clone tailscale repo
         # working-directory: /workdir
         run: |
-          git clone --depth $REPO_DEPTH --branch $REPO_BRANCH $REPO_URL tailscale
+          git clone --depth $REPO_DEPTH --branch $REPO_BRANCH $REPO_URL
         #  ln -sf /workdir/tailscale $GITHUB_WORKSPACE/tailscale
       - name: Install dependencies
         run: sudo apt update && sudo apt install -y binutils-mipsel-linux-gnu
