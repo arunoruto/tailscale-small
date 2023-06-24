@@ -38,6 +38,7 @@ jobs:
           ls -la
           pushd tailscale
           GOOS=$OS GOARCH=$ARCH GOMIPS=$MIPS go build -o tailscale.combined -tags ts_include_cli -trimpath -ldflags="-s -w" ./cmd/tailscaled
+          mv tailscale.combined ../tailscale_$REPO_TAG_mipsle.combined
           popd
       - name: Compression tailscale
         uses: crazy-max/ghaction-upx@v2
@@ -45,4 +46,10 @@ jobs:
           version: latest
           args: --lzma
           files: |
-            tailscale.combined
+            tailscale_$REPO_TAG_mipsle.combined
+      # - name: Create a Release
+      #   uses: elgohr/Github-Release-Action@v4
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+      #   with:
+      #     title: MyReleaseMessage
