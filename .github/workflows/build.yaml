@@ -55,7 +55,7 @@ jobs:
           name: MIPS LE
           tag_name: ${{ env.REPO_TAG }}
           files: |
-            *.combined
+            tailscale_${{ REPO_TAG }}_mipsle.combined
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # - name: Create a Release
