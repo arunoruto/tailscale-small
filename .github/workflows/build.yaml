@@ -39,7 +39,7 @@ jobs:
           ls -la
           pushd tailscale
           GOOS=$OS GOARCH=$ARCH GOMIPS=$MIPS go build -o tailscale.combined -tags ts_include_cli -trimpath -ldflags="-s -w" ./cmd/tailscaled
-          mv tailscale.combined ../tailscale_${REPO_TAG}_mipsle.combined
+          mv tailscale.combined ../tailscale_mipsle.combined
           popd
           ls -la
       - name: Compression tailscale
@@ -55,7 +55,7 @@ jobs:
           name: MIPS LE
           tag_name: ${{ env.REPO_TAG }}
           files: |
-            tailscale_${{ env.REPO_TAG }}_mipsle.combined
+            tailscale_mipsle.combined
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # - name: Create a Release
