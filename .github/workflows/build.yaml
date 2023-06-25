@@ -2,6 +2,7 @@ name: Build
 run-name: ${{ github.actor }} is building new tailscale packages
 on:
   workflow_dispatch:
+
 env:
   REPO_URL: https://github.com/tailscale/tailscale
   REPO_TAG: v1.40.1
@@ -53,7 +54,8 @@ jobs:
         with:
           name: MIPS LE
           tag_name: ${{ env.REPO_TAG }}
-          files: *.combined
+          files: |
+            *.combined
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # - name: Create a Release
