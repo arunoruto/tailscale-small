@@ -48,14 +48,14 @@ jobs:
           version: latest
           args: --lzma
           files: |
-            ./*.combined
+            ./tailscale_mipsle.combined
       - run: ls -lah
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
           name: MIPS LE
           tag_name: ${{ env.REPO_TAG }}
-          files: tailscale_mipsle.combined
+          files: ./tailscale_mipsle.combined
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # - name: Create a Release
